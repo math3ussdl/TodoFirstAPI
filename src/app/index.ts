@@ -3,7 +3,7 @@ import chalk from 'chalk';
 import express, { Application } from 'express';
 import { Mongoose } from 'mongoose';
 import morgan from 'morgan';
-import db from '../database/db.config';
+import db from '../config/db.config';
 import routes from '../routes';
 
 class TFApplication {
@@ -30,6 +30,8 @@ class TFApplication {
 			.catch(err => {
 				console.log(`DATABASE: [${chalk.red('offline')}]`);
 				console.error(err);
+
+				process.exit(1);
 			})
 			.finally(() => console.log('--------------------------'));
 	}
