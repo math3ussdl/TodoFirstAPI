@@ -1,28 +1,26 @@
 import { json, urlencoded } from 'body-parser';
 import chalk from 'chalk';
 import express, { Application } from 'express';
-import { Mongoose } from 'mongoose';
+import mongoose from 'mongoose';
 import morgan from 'morgan';
 import db from '../config/db.config';
 import routes from '../routes';
 
 class TFApplication {
 	app: Application;
-	dbClient: Mongoose;
 
 	constructor() {
 		this.app = express();
-		this.dbClient = new Mongoose();
 
 		this._dbConnect();
 		this._applyMiddlewares();
 	}
 
 	async _dbConnect() {
-		await this.dbClient
+		await mongoose
 			.connect(db.uri!, {
 				useCreateIndex: true,
-				useFindAndModify: true,
+				useFindAndModify: false,
 				useNewUrlParser: true,
 				useUnifiedTopology: true
 			})

@@ -1,7 +1,7 @@
 import { Document, Model, model, Schema } from 'mongoose';
 
 /**
- * Interface to model Schema for TypeScript
+ * User Interface
  * @param name:string
  * @param phone:string
  * @param email:string
