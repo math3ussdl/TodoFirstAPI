@@ -7,7 +7,7 @@
   "scripts": {
     "build": "rimraf ./build && tsc",
     "start": "npm run build && node .",
-    "serve": "nodemon",
+    "serve": "set DEBUG=api:* & nodemon",
     "test:dev": "nodemon --watch . --ext ts --exec \"mocha -r ts-node/register test/**/*.test.ts\""
   },
   "dependencies": {
@@ -18,18 +18,17 @@
     "faker": "^5.4.0",
     "http-status-codes": "^2.1.4",
     "mongoose": "^5.12.1",
-    "morgan": "^1.10.0",
     "request": "^2.88.2",
     "sinon": "^10.0.0"
   },
   "devDependencies": {
     "@types/chai": "^4.2.15",
     "@types/chalk": "^2.2.0",
+    "@types/debug": "^4.1.5",
     "@types/express": "^4.17.11",
     "@types/faker": "^5.1.7",
     "@types/mocha": "^8.2.1",
     "@types/mongoose": "^5.10.3",
-    "@types/morgan": "^1.9.2",
     "@types/node": "^14.14.35",
     "@types/sinon": "^9.0.11",
     "@types/supertest": "^2.0.10",

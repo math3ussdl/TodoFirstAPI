@@ -1,16 +1,18 @@
 import { json, urlencoded } from 'body-parser';
 import chalk from 'chalk';
+import debug, { Debugger } from 'debug';
 import express, { Application } from 'express';
 import mongoose from 'mongoose';
-import morgan from 'morgan';
 import db from '../config/db.config';
 import routes from '../routes';
 
 class TFApplication {
 	app: Application;
+	log: Debugger;
 
 	constructor() {
 		this.app = express();
+		this.log = debug('api:main');
 
 		this._dbConnect();
 		this._applyMiddlewares();
@@ -24,22 +26,29 @@ class TFApplication {
 				useNewUrlParser: true,
 				useUnifiedTopology: true
 			})
-			.then(() => console.log(`DATABASE: [${chalk.green('online')}]`))
-			.catch(err => {
-				console.log(`DATABASE: [${chalk.red('offline')}]`);
-				console.error(err);
+			.then(() => this.log(`DATABASE: [${chalk.green('online')}]`))
+			.catch(() => {
+				this.log(`DATABASE: [${chalk.red('offline')}]`);
 
 				process.exit(1);
-			})
-			.finally(() => console.log('--------------------------'));
+			});
 	}
 
 	_applyMiddlewares() {
 		this.app.use(json());
 		this.app.use(urlencoded({ extended: false }));
-		this.app.use(morgan('dev'));
+
+		this.app.use((req, _res, next) => {
+			this.log(
+				`${req.method} ${req.url} - request at: ${new Date().toISOString()}`
+			);
+			return next();
+		});
+
 		this.app.use(routes);
 	}
 }
 
-export default new TFApplication().app;
+const { app, log } = new TFApplication();
+
+export { app, log };
