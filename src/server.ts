@@ -1,11 +1,7 @@
+require('dotenv-expand')(require('dotenv').config());
+
 import chalk from 'chalk';
-import env from 'dotenv';
-import expand from 'dotenv-expand';
-
-import { app, log } from './app'
-
-const enviroment = env.config();
-expand(enviroment);
+import { app, log } from './app';
 
 const port = process.env.PORT;
 

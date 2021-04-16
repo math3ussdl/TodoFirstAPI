@@ -51,7 +51,11 @@ class ListController {
 
   async findAll(_req: Request, res: Response) {
 		try {
-			const lists: IList[] = await List.find();
+			const lists: IList[] = await List
+				.find()
+				.populate('author')
+				.populate('category')
+				.populate('tasks');
 
 			res.json({ errors: null, data: lists });
 		} catch (err) {

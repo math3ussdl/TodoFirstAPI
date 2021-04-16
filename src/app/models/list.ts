@@ -15,6 +15,7 @@ export interface IList extends Document {
   title: string;
   description: string;
   category: ICategory['_id'];
+  tasks: ITask['_id'][]
 }
 
 const listSchema: Schema = new Schema({
@@ -37,7 +38,12 @@ const listSchema: Schema = new Schema({
   category: {
     type: Schema.Types.ObjectId,
     ref: 'Category'
-  }
+  },
+
+  tasks: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Task'
+  }]
 });
 
 const List: Model<IList> = model('List', listSchema);

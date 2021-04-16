@@ -8,7 +8,7 @@
     "build": "rimraf ./build && tsc",
     "start": "npm run build && node .",
     "serve": "set DEBUG=api:* & nodemon",
-    "test:dev": "nodemon --watch . --ext ts --exec \"mocha -r ts-node/register test/**/*.test.ts\""
+    "test": "nodemon --watch . --ext ts --exec \"mocha -r ts-node/register test/**/*.test.ts\""
   },
   "dependencies": {
     "body-parser": "^1.19.0",

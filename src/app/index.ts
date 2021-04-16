@@ -5,6 +5,7 @@ import express, { Application } from 'express';
 import mongoose from 'mongoose';
 import db from '../config/db.config';
 import routes from '../routes';
+import loggingMiddleware from './middlewares/logging';
 
 class TFApplication {
 	app: Application;
@@ -37,13 +38,7 @@ class TFApplication {
 	_applyMiddlewares() {
 		this.app.use(json());
 		this.app.use(urlencoded({ extended: false }));
-
-		this.app.use((req, _res, next) => {
-			this.log(
-				`${req.method} ${req.url} - request at: ${new Date().toISOString()}`
-			);
-			return next();
-		});
+		this.app.use((req, res, next) => loggingMiddleware(req, res, next, log));
 
 		this.app.use(routes);
 	}
